@@ -23,7 +23,7 @@ import { UsersModule } from './users/users.module';
     CacheModule.register<RedisClientOptions>({
       isGlobal: true,
       store: redisStore,
-      url: "rediss://default:72f3ea0595794c4aa64b561fc2d218cb@romantic-zebra-36757.upstash.io:36757",
+      url: "",
     }),
     UsersModule,
   ],

@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  postgres:
+      image: postgres:13-alpine
+      ports:
+        - 5432:5432
+      env_file:
+        - .env
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+      
+  redis:
+    image: redis:6.0
+    ports:
+      - 6379:6379
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: ghcr.io/joeferner/redis-commander:latest
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "8081:8081"
+
+

@@ -6,11 +6,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CacheConfigService } from './cacheconfig.service';
-import { TypeOrmConfigService } from './typeorm-config.service';
+import { PassportModule } from '@nestjs/passport';
+import { CacheConfigService } from './config/cacheconfig.service';
+import { TypeOrmConfigService } from './config/typeorm.service';
+import { SupabaseGuard, SupabaseModule } from './common/supabase';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
+    PassportModule, SupabaseModule,
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,
     }),
@@ -24,6 +28,11 @@ import { TypeOrmConfigService } from './typeorm-config.service';
   controllers: [AppController],
   providers: [
     TypeOrmConfigService,
-    CacheConfigService, AppService],
+    CacheConfigService, AppService,
+    {
+      provide: APP_GUARD,
+      useClass: SupabaseGuard,
+    },
+  ],
 })
 export class AppModule { }

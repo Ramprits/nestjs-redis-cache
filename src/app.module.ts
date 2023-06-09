@@ -11,6 +11,7 @@ import { CacheConfigService } from './config/cacheconfig.service';
 import { TypeOrmConfigService } from './config/typeorm.service';
 import { SupabaseGuard, SupabaseModule } from './common/supabase';
 import { APP_GUARD } from '@nestjs/core';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -24,15 +25,13 @@ import { APP_GUARD } from '@nestjs/core';
       useClass: CacheConfigService
     }),
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [
     TypeOrmConfigService,
     CacheConfigService, AppService,
-    {
-      provide: APP_GUARD,
-      useClass: SupabaseGuard,
-    },
+
   ],
 })
 export class AppModule { }
